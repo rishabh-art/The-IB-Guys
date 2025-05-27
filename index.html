@@ -3,112 +3,260 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The IB Guys - Coming Soon</title>
+    <title>AdaptED by The IB Guys - Coming Soon</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Custom font import */
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        /* Import Montserrat font from Google Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&display=swap');
+        
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Montserrat', sans-serif; /* Apply Montserrat to the entire body */
+            /* Gradient background from dark blue to a slightly lighter blue */
+            background: linear-gradient(135deg, #0A1128 0%, #122A57 100%);
+            min-height: 100vh; /* Ensure body takes full viewport height */
+            display: flex;
+            flex-direction: column; /* Arrange content in a column */
+            align-items: center; /* Center content horizontally */
+            justify-content: center; /* Center content vertically */
+            padding: 1rem; /* Add some padding around the main container */
+            color: #E0E7FF; /* Light blue-gray for general text */
+            overflow: hidden; /* Hide overflow for animations */
+        }
+
+        /* Container for the initial animated content */
+        #intro-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh; /* Take full height for intro */
+            width: 100%;
+            max-width: 6xl;
+            margin: auto;
+            text-align: center;
+            position: relative; /* Needed for absolute positioning of dynamic phrase */
+        }
+
+        /* Styling for the typing effect */
+        .typing-text {
+            overflow: hidden; /* Ensures the text is hidden until typed */
+            white-space: nowrap; /* Prevents text from wrapping */
+            border-right: .15em solid #00FFFF; /* Blinking cursor effect */
+            animation: 
+                typing 1.5s steps(12, end) forwards, /* Faster typing for "Prepare to..." */
+                blink-caret .75s step-end infinite;
+            width: 0; /* Starts with zero width for typing animation */
+            display: inline-block; /* Ensures border-right works correctly */
+        }
+
+        /* Keyframes for typing animation */
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+
+        /* Keyframes for blinking caret */
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: #00FFFF; }
+        }
+
+        /* Keyframes for dynamic phrase fade in/out */
+        @keyframes fade-in-out-phrase {
+            0% { opacity: 0; transform: translateY(20px); }
+            10% { opacity: 1; transform: translateY(0); }
+            90% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-20px); }
+        }
+        .dynamic-phrase-animation {
+            animation: fade-in-out-phrase 2.5s ease-in-out forwards; /* 2.5 seconds per phrase cycle */
+        }
+
+        /* Full-screen form container */
+        #form-container {
+            display: none; /* Hidden by default */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0A1128 0%, #122A57 100%); /* Match body background */
+            align-items: center;
+            justify-content: center;
+            z-index: 1000; /* Ensure it's on top */
+            opacity: 0;
+            transition: opacity 1s ease-in-out; /* Smoother transition for form reveal */
+        }
+        #form-container.active {
+            display: flex; /* Show when active */
+            opacity: 1;
+        }
+
+        /* Form box styling */
+        .form-box {
+            background-color: rgba(17, 24, 39, 0.9); /* Dark gray with transparency */
+            border: 1px solid #00FFFF; /* Cyan border */
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.3); /* Subtle cyan glow */
+            padding: 3rem;
+            border-radius: 1.5rem; /* More rounded corners */
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            transform: scale(0.9); /* Start slightly smaller for transition */
+            transition: transform 0.8s ease-out; /* Smoother scale transition for form box */
+        }
+        .form-box.active {
+            transform: scale(1); /* Scale up when active */
+        }
+
+        /* Input field styling */
+        .form-box input {
+            background-color: #1F2937; /* Darker input background */
+            border-color: #00BFFF; /* Brighter cyan border */
+            color: #E0E7FF; /* Light text color */
+        }
+        .form-box input:focus {
+            border-color: #00FFFF; /* Even brighter cyan on focus */
+            box-shadow: 0 0 0 2px rgba(0, 255, 255, 0.5); /* Focus glow */
+        }
+
+        /* Button styling */
+        .form-box button {
+            background-color: #00BFFF; /* Bright cyan button */
+            border-color: #00FFFF;
+            box-shadow: 0 5px 15px rgba(0, 255, 255, 0.4); /* Button shadow */
+        }
+        .form-box button:hover {
+            background-color: #00FFFF; /* Lighter cyan on hover */
+            box-shadow: 0 8px 20px rgba(0, 255, 255, 0.6); /* More intense shadow on hover */
         }
     </style>
 </head>
-<body class="bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700 min-h-screen flex items-center justify-center p-4">
-    <div class="bg-white bg-opacity-90 p-8 md:p-12 rounded-xl shadow-2xl max-w-4xl w-full text-center transform transition-all duration-500 ease-in-out scale-95 hover:scale-100">
-        <header class="mb-8">
-            <h1 class="text-5xl md:text-6xl font-extrabold text-blue-900 mb-4 tracking-tight">
-                The IB Guys
+<body>
+    <div id="intro-container">
+        <header class="text-center mb-12">
+            <h1 class="text-6xl md:text-7xl font-extrabold text-cyan-400 mb-4 tracking-tight leading-tight opacity-0" id="adapted-title">
+                AdaptED
             </h1>
-            <p class="text-xl md:text-2xl font-semibold text-blue-700 italic">
-                Real Help. Real Results. Real IB.
+            <p class="text-2xl md:text-3xl font-semibold text-blue-300 italic mb-2 opacity-0" id="ib-guys-subtitle">
+                by The IB Guys
             </p>
         </header>
 
-        <main class="mb-8">
-            <h2 class="text-4xl md:text-5xl font-bold text-blue-800 mb-6 animate-pulse">
-                Coming Soon!
+        <section class="text-center px-4">
+            <h2 class="text-6xl md:text-7xl font-bold text-cyan-300 mb-8 typing-text" id="prepare-text">
+                Prepare to...
             </h2>
-            <p class="text-lg md:text-xl text-blue-600 leading-relaxed mb-6">
-                Get ready for a new era of personalized education.
-                We are meticulously crafting a platform to provide you with tailored support and resources,
-                ensuring your academic success in the International Baccalaureate program.
-            </p>
-            <p class="text-md md:text-lg text-blue-500 mb-8">
-                "The IB Guys" is dedicated to helping you achieve your full potential.
-            </p>
-
-            <section class="bg-blue-100 p-6 rounded-lg shadow-inner border border-blue-200">
-                <h3 class="text-2xl font-bold text-blue-800 mb-4 flex items-center justify-center">
-                    🚀 Join Our Waitlist! 🚀
-                </h3>
-                <p class="text-lg text-blue-700 mb-6">
-                    Be among the first to know when we launch and get exclusive early access!
-                </p>
-                <form action="https://formsubmit.co/palrishabh783@gmail.com" method="POST" class="space-y-4">
-                    <div>
-                        <label for="name" class="block text-left text-blue-800 text-sm font-semibold mb-1">Name:</label>
-                        <input type="text" id="name" name="name" placeholder="Your Full Name" required
-                               class="w-full p-3 border-2 border-blue-300 rounded-lg text-blue-800 focus:outline-none focus:border-blue-500 transition-colors duration-200">
-                    </div>
-                    <div>
-                        <label for="email" class="block text-left text-blue-800 text-sm font-semibold mb-1">Email:</label>
-                        <input type="email" id="email" name="email" placeholder="your@example.com" required
-                               class="w-full p-3 border-2 border-blue-300 rounded-lg text-blue-800 focus:outline-none focus:border-blue-500 transition-colors duration-200">
-                    </div>
-                    <div>
-                        <label for="phone" class="block text-left text-blue-800 text-sm font-semibold mb-1">Phone (Optional):</label>
-                        <input type="tel" id="phone" name="phone" placeholder="91 123 456 789"
-                               class="w-full p-3 border-2 border-blue-300 rounded-lg text-blue-800 focus:outline-none focus:border-blue-500 transition-colors duration-200">
-                    </div>
-                    <input type="text" name="_honey" style="display:none">
-                    <input type="hidden" name="_captcha" value="false">
-                    <input type="hidden" name="_next" value="https://theibguys.techwell.biz/thanks.html">
-                    <button type="submit"
-                            class="w-full px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 transition-colors duration-300 transform hover:scale-105 active:scale-95">
-                        Join Waitlist
-                    </button>
-                </form>
-                <p id="formMessage" class="text-md mt-4 min-h-[1.5rem] text-blue-800"></p>
-                <p class="text-xs text-gray-500 mt-2">
-                    <span class="font-bold">Note:</span> This form uses Formsubmit.io to send data directly to the specified email address.
-                </p>
-            </section>
-        </main>
-
-        <section class="mb-8 text-blue-800">
-            <h3 class="text-2xl md:text-3xl font-bold mb-4 border-b-2 border-blue-300 pb-2 inline-block">
-                Our Visionaries
-            </h3>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-4">
-                <div class="bg-blue-50 p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
-                    <p class="font-bold text-xl mb-1">Rishabh Pal</p>
-                    <p class="text-blue-600">Operations Coordinator</p>
-                </div>
-                <div class="bg-blue-50 p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
-                    <p class="font-bold text-xl mb-1">Arnav Saxena</p>
-                    <p class="text-blue-600">Brand Coordinator</p>
-                </div>
-                <div class="bg-blue-50 p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
-                    <p class="font-bold text-xl mb-1">Aahaann Chavan</p>
-                    <p class="text-blue-600">Product Coordinator</p>
-                </div>
-            </div>
-            <div class="mt-8 text-blue-700">
-                <p class="text-lg font-semibold">
-                    Currently led by our Chief Coordinator: <span class="text-blue-900 font-bold">Arnav Saxena</span>
-                </p>
-            </div>
+            <p id="dynamic-phrase" class="text-3xl md:text-4xl font-semibold text-blue-100 mt-8 min-h-[4rem] flex items-center justify-center"></p>
         </section>
+    </div>
 
-        <footer class="text-blue-600 text-sm mt-8 pt-4 border-t border-blue-200">
-            &copy; 2025 The IB Guys. All rights reserved.
-        </footer>
+    <div id="form-container">
+        <div class="form-box">
+            <h2 class="text-4xl md:text-5xl font-bold text-cyan-300 mb-8">
+                Unlock Your Potential. Join the Waitlist!
+            </h2>
+            <p class="text-lg text-blue-100 mb-8">
+                Be among the first to experience AdaptED.
+            </p>
+            <form action="https://formsubmit.co/palrishabh783@gmail.com" method="POST" class="space-y-6">
+                <div>
+                    <label for="name" class="sr-only">Name:</label> <input type="text" id="name" name="name" placeholder="Your Full Name" required
+                           class="w-full p-3 border-2 rounded-lg focus:outline-none shadow-md">
+                </div>
+                <div>
+                    <label for="email" class="sr-only">Email:</label> <input type="email" id="email" name="email" placeholder="your@example.com" required
+                           class="w-full p-3 border-2 rounded-lg focus:outline-none shadow-md">
+                </div>
+                <input type="text" name="_honey" style="display:none">
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="_next" value="https://theibguys.techwell.biz/thanks.html"> <button type="submit"
+                        class="w-full px-8 py-4 text-white font-bold text-lg rounded-lg shadow-md 
+                               transition-all duration-300 transform hover:scale-105 active:scale-95">
+                    Join Waitlist
+                </button>
+            </form>
+            <p class="text-xs text-gray-400 mt-4">
+                <span class="font-bold">Note:</span> This form uses Formsubmit.co to send data directly to the specified email address.
+            </p>
+        </div>
     </div>
 
     <script>
-        // No JavaScript needed for form submission as Formsubmit.io handles it directly.
-        // The formMessage paragraph is kept for potential future client-side validation
-        // or messages, but it's not actively used for submission success/failure with Formsubmit.io.
+        document.addEventListener('DOMContentLoaded', () => {
+            const adaptedTitle = document.getElementById('adapted-title');
+            const ibGuysSubtitle = document.getElementById('ib-guys-subtitle');
+            const prepareText = document.getElementById('prepare-text');
+            const dynamicPhraseElement = document.getElementById('dynamic-phrase');
+            const introContainer = document.getElementById('intro-container');
+            const formContainer = document.getElementById('form-container');
+            const formBox = formContainer.querySelector('.form-box');
+
+            const phrases = [
+                'Feel the preparation you never believed existed.',
+                'Be part of personalization like never before.',
+                'Experience resources that redefine learning.',
+                'Achieve mastery with unparalleled support.'
+            ];
+            let currentPhraseIndex = 0;
+
+            // Function to display and cycle through phrases
+            function cyclePhrases() {
+                // Remove the animation class to allow it to be re-applied and restart
+                dynamicPhraseElement.classList.remove('dynamic-phrase-animation');
+                // Force reflow/repaint to ensure the class removal takes effect before re-adding
+                void dynamicPhraseElement.offsetWidth; 
+                
+                dynamicPhraseElement.innerHTML = phrases[currentPhraseIndex];
+                dynamicPhraseElement.classList.add('dynamic-phrase-animation');
+
+                // Advance to the next phrase for the *next* cycle
+                currentPhraseIndex = (currentPhraseIndex + 1) % phrases.length;
+            }
+
+            // Sequence of animations
+            setTimeout(() => {
+                // Fade in "AdaptED"
+                adaptedTitle.style.transition = 'opacity 1s ease-in-out';
+                adaptedTitle.style.opacity = '1';
+            }, 500); // After 0.5 seconds
+
+            setTimeout(() => {
+                // Fade in "by The IB Guys"
+                ibGuysSubtitle.style.transition = 'opacity 1s ease-in-out';
+                ibGuysSubtitle.style.opacity = '1';
+            }, 1500); // After 1.5 seconds
+
+            // Start cycling phrases after prepareText typing is complete
+            const typingDuration = 1500; // 1.5 seconds for "Prepare to..." typing
+            const phraseCycleDuration = 2500; // 2.5 seconds per phrase cycle from CSS animation
+            const numberOfCycles = phrases.length; // Show each phrase exactly once
+
+            setTimeout(() => {
+                let cycleCount = 0;
+                // Immediately display the first phrase
+                cyclePhrases(); 
+                cycleCount++;
+
+                const phraseInterval = setInterval(() => {
+                    if (cycleCount < numberOfCycles) {
+                        cyclePhrases();
+                        cycleCount++;
+                    } else {
+                        clearInterval(phraseInterval);
+                        // Transition to full-screen form after all animations
+                        introContainer.style.transition = 'opacity 1s ease-in-out'; // Smoother fade out
+                        introContainer.style.opacity = '0'; // Fade out intro container
+
+                        setTimeout(() => {
+                            introContainer.style.display = 'none'; // Hide intro content after fade out
+                            formContainer.classList.add('active'); // Show and fade in the form container
+                            formBox.classList.add('active'); // Scale up the form box
+                        }, 1000); // Wait for intro to fade out (matches transition duration)
+                    }
+                }, phraseCycleDuration);
+            }, typingDuration + 1000); // Start cycling phrases 1 second after "Prepare to..." typing finishes
+        });
     </script>
 </body>
 </html>
